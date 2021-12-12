@@ -1,0 +1,1 @@
+# vue-mini-store-hardware
