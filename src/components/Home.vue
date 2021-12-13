@@ -28,8 +28,8 @@
           <swiper-slide>Slide 2</swiper-slide>
           <swiper-slide>Slide 3</swiper-slide>
         </swiper>
-        <button class="my-prev swiper-button-prev">prev</button>
-        <button class="my-next swiper-button-next">next</button>
+        <button class="my-prev swiper-button-prev"></button>
+        <button class="my-next swiper-button-next"></button>
       </div>
     </div>
   </section>
@@ -47,6 +47,22 @@ export default {
       breakpoints: {
         320: {
           slidesPerView: 1,
+          spaceBetween: 10
+        },
+        375: {
+          slidesPerView: 1,
+          spaceBetween: 10
+        },
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 10
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 10
+        },
+        1024: {
+          slidesPerView: 3,
           spaceBetween: 10
         }
       }

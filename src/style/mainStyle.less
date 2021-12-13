@@ -78,6 +78,7 @@ body {
 }
 // COLOR
 @gray-light: #f7f7f9;
+@red-light: #E63956;
 //
 
 // Menu style
@@ -117,10 +118,21 @@ body {
   justify-content: center;
   margin-top: 200px;
 }
-//
+// swiper
+.block-swiper {
+  position: relative;
+}
 .swiper-slide {
   background-color: antiquewhite;
 }
 .swiper-home {
   height: 350px;
+}
+.swiper-button-prev {
+  color: @red-light;
+  left: -50px;
+}
+.swiper-button-next {
+  color: @red-light;
+  right: -50px;
 }
