@@ -1,0 +1,146 @@
+// HOME
+// swiper
+.block-swiper {
+  margin-top: 20px;
+  position: relative;
+}
+.swiper-slide {
+  background-color: #fff;
+  box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.11);
+  height: 110px !important;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    height: 50%;
+    width: 35%;
+  }
+}
+.swiper-home {
+  padding: 5px !important;
+}
+.my-prev {
+  color: @red-light !important;
+  right: 30px !important;
+}
+.my-next {
+  color: @red-light !important;
+  right: 5px !important;
+}
+.swiper-wrapper {
+  align-items: center;
+  height: 99% !important;
+}
+.my-next:after,
+.my-prev:after {
+  font-size: 25px !important;
+}
+
+.my-prev,
+.my-next {
+  position: absolute;
+  bottom: -40px;
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: swiper-icons;
+  font-size: var(--swiper-navigation-size);
+  text-transform: none !important;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant: initial;
+  line-height: 1;
+}
+.my-prev {
+  &::after {
+    content: "prev";
+  }
+}
+.my-next {
+  &::after {
+    content: "next";
+  }
+}
+.swiper-button-disabled {
+  opacity: 0.5;
+}
+//
+//product
+.block-hardware {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .hardware-item {
+    width: 300px;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.11);
+    padding: 10px;
+    margin: 10px 0;
+    margin-right: 10px;
+    background-color: #fff;
+    position: relative;
+    &:hover {
+      transition: all 0.5s;
+      transform: scale(1.2);
+      z-index: 10;
+    }
+    a {
+      .hardware-item__img {
+        width: 250px;
+        margin: 0 auto;
+        img {
+          width: 100%;
+          height: 160px;
+        }
+      }
+    }
+    .title-hardware {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .decr-hardware {
+      display: block;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+    .price-hardware {
+      display: block;
+      font-weight: 700;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+    .button-hardware {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      button,
+      a {
+        font-size: 10px;
+        padding: 10px;
+        height: auto;
+      }
+      button {
+        background-color: @red-light;
+        color: #fff;
+      }
+    }
+  }
+}
+.block-product {
+  margin-top: 25px;
+  .title-h1 {
+    padding: 5px;
+  }
+}
+///

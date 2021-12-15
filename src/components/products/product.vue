@@ -1,15 +1,13 @@
 <template>
-    <section class="product-page">
-        <div class="container">
-            product product page
-        </div>
-    </section>
+  <section class="product-page">
+    <div class="container">
+        123
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
-  data: () => ({
-
-  })
+  data: () => ({})
 }
 </script>

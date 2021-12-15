@@ -3,15 +3,17 @@
     <div class="container">
       <div class="menu-header">
         <div class="menu-header__left">
-          <v-app-bar-nav-icon @click.stop="openNavBar()" class="d-xl-none d-lg-none d-md-none"></v-app-bar-nav-icon>
-          <span class="title-store">Dobrynin <span>dev</span></span>
+          <v-app-bar-nav-icon
+            @click.stop="openNavBar()"
+            class="d-xl-none d-lg-none d-md-none"
+          ></v-app-bar-nav-icon>
+          <router-link to="/">
+            <span class="title-store"
+              >Dobrynin <span>dev</span></span
+            ></router-link
+          >
         </div>
-        <v-navigation-drawer
-          v-model="isNavBar"
-          absolute
-          bottom
-          temporary
-        >
+        <v-navigation-drawer v-model="isNavBar" absolute bottom temporary>
           <ul class="nav-list">
             <v-btn
               class="nav-link"
@@ -23,9 +25,7 @@
             </v-btn>
           </ul>
         </v-navigation-drawer>
-        <nav
-          class="nav hidden-sm-and-down hidden-xs-and-down"
-        >
+        <nav class="nav hidden-sm-and-down hidden-xs-and-down">
           <ul class="nav-list">
             <v-btn
               class="nav-link"
