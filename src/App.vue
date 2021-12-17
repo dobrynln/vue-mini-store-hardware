@@ -1,7 +1,13 @@
 <template>
   <v-app>
     <NavBar />
-    <router-view/>
+    <router-view />
+    <div class="alert-error" v-if="error">
+      <v-alert type="error"
+        >Что-то пошло не так... Проверьте данные.
+        <v-btn @click="closeAlert">Ок</v-btn>
+      </v-alert>
+    </div>
   </v-app>
 </template>
 
@@ -12,9 +18,17 @@ export default {
   components: {
     NavBar
   },
-  data: () => ({
-    //
-  })
+  data: () => ({}),
+  methods: {
+    closeAlert () {
+      this.$store.dispatch('clearError')
+    }
+  },
+  computed: {
+    error () {
+      return this.$store.getters.error
+    }
+  }
 }
 </script>
 

@@ -41,11 +41,16 @@
               label="Повторите ваш пароль"
               required
             ></v-text-field>
-            <span class="span-invalid" v-if="v$.form.confirmPassword.$error || !v$.form.confirmPassword.sameAs"
+            <span
+              class="span-invalid"
+              v-if="
+                v$.form.confirmPassword.$error ||
+                !v$.form.confirmPassword.sameAs
+              "
               >Повторный пароль неправильный</span
             >
           </v-col>
-          <v-btn type="submit">Авторизоваться</v-btn>
+          <v-btn type="submit" :loading="loading" :disabled="loading">Регистрация</v-btn>
         </div>
       </v-form>
     </div>
@@ -73,11 +78,25 @@ export default {
       }
     }
   },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   methods: {
     checkForm () {
       this.v$.$validate()
       if (!this.v$.$error) {
-        console.log('ok')
+        const user = {
+          email: this.form.email,
+          userPassword: this.form.userPassword
+        }
+        this.$store.dispatch('regUser', user)
+          .then(() => {
+            this.$router.push('/')
+          }).catch(e => {
+            console.log(e.message)
+          })
       } else {
         console.log('not ok')
       }

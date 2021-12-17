@@ -31,7 +31,7 @@
               >Пароль введен неверно</span
             >
           </v-col>
-          <v-btn type="submit">Авторизоваться</v-btn>
+          <v-btn type="submit" :disabled="loading">Авторизоваться</v-btn>
         </div>
       </v-form>
     </div>
@@ -57,13 +57,27 @@ export default {
       }
     }
   },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   methods: {
     checkForm () {
       this.v$.$validate()
       if (!this.v$.$error) {
-        console.log('ok')
-      } else {
-        console.log('not ok')
+        const user = {
+          email: this.form.email,
+          userPassword: this.form.userPassword
+        }
+        this.$store
+          .dispatch('loginUser', user)
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch((e) => {
+            console.log(e.message)
+          })
       }
     }
   }
