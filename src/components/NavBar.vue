@@ -35,6 +35,13 @@
             >
               <v-icon left>{{ link.icon }}</v-icon> {{ link.title }}
             </v-btn>
+            <v-btn
+              class="nav-link"
+              @click="logoutUser"
+              v-if="isUserLogin"
+            >
+              <v-icon left>mdi-account-remove</v-icon> Выйти
+            </v-btn>
           </ul>
         </nav>
       </div>
@@ -43,19 +50,17 @@
 </template>
 
 <script>
+
 export default {
   name: 'NavBar',
   data: () => ({
-    isNavBar: false,
-    linksNav: [
-      { title: 'Корзина', icon: 'mdi-cart-arrow-right', url: '/checkout' },
-      { title: 'Мои оборудования', icon: 'mdi-laptop', url: '/list' },
-      { title: 'Добавить оборудование', icon: 'mdi-plus-thick', url: '/new' },
-      { title: 'Авторизация', icon: 'mdi-account-lock', url: '/login' },
-      { title: 'Регистрация', icon: 'mdi-account-question', url: '/register' }
-    ]
+    isNavBar: false
   }),
   methods: {
+    logoutUser () {
+      this.$store.dispatch('logoutUser')
+      this.$router.push('/')
+    },
     openNavBar () {
       this.isNavBar = !this.isNavBar
       if (this.isNavBar === true) {
@@ -63,6 +68,32 @@ export default {
           this.isNavBar = false
         })
       }
+    }
+  },
+  computed: {
+    isUserLogin () {
+      return this.$store.getters.isUserLogin
+    },
+    linksNav () {
+      if (this.isUserLogin) {
+        return [
+          { title: 'Корзина', icon: 'mdi-cart-arrow-right', url: '/checkout' },
+          { title: 'Мои оборудования', icon: 'mdi-laptop', url: '/list' },
+          {
+            title: 'Добавить оборудование',
+            icon: 'mdi-plus-thick',
+            url: '/new'
+          }
+        ]
+      }
+      return [
+        { title: 'Авторизация', icon: 'mdi-account-lock', url: '/login' },
+        {
+          title: 'Регистрация',
+          icon: 'mdi-account-question',
+          url: '/register'
+        }
+      ]
     }
   }
 }

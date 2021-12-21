@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import firebase from 'firebase/compat/app'
 import NavBar from '@/components/NavBar'
 export default {
   name: 'App',
@@ -28,6 +29,14 @@ export default {
     error () {
       return this.$store.getters.error
     }
+  },
+  created () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoLoginUser', user)
+      }
+    })
+    this.$store.dispatch('fetchProducts')
   }
 }
 </script>

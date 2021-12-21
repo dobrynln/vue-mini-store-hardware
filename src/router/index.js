@@ -6,7 +6,7 @@ import product from '@/components/products/product'
 import ProductList from '@/components/products/ProductList'
 import login from '@/components/auth/login'
 import register from '@/components/auth/register'
-
+import authGuard from './auth-guard'
 const routes = [
   {
     path: '',
@@ -22,17 +22,20 @@ const routes = [
   {
     path: '/new',
     name: 'new',
-    component: NewProduct
+    component: NewProduct,
+    beforeEnter: authGuard
   },
   {
     path: '/list',
     name: 'list',
-    component: ProductList
+    component: ProductList,
+    beforeEnter: authGuard
   },
   {
     path: '/checkout',
     name: 'checkout',
-    component: checkout
+    component: checkout,
+    beforeEnter: authGuard
   },
   {
     path: '/login',

@@ -1,6 +1,6 @@
 <template>
   <section class="home-page">
-    <div class="container">
+    <div class="container" v-if="!loading">
       <div class="block-swiper">
         <h1 class="title-h1">Акции на товары:</h1>
         <swiper
@@ -15,9 +15,11 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide v-for="(item, i) in promoProducts" :key="i">
-            <router-link :aria-label="item.title" :to="'/product/' + item.id"
-              ><img :src="item.imageSrc" alt="Img hardware" />
+          <swiper-slide v-for="(product, i) in promoProducts" :key="i">
+            <router-link
+              :aria-label="product.title"
+              :to="'/product/' + product.id"
+              ><img :src="product.imageSrc" alt="Img hardware" />
             </router-link>
           </swiper-slide>
         </swiper>
@@ -27,30 +29,43 @@
       <div class="block-product">
         <h1 class="title-h1">Товары</h1>
         <div class="block-hardware">
-          <div class="hardware-item" v-for="(item, i) in products" :key="i">
-            <router-link :aria-label="item.title" :to="'/product/' + item.id">
-              <div class="hardware-item__img">
-                <img :src="item.imageSrc" alt="Img hardware" /></div
-            ></router-link>
-            <span class="title-hardware">{{ item.title }}</span>
-            <span class="decr-hardware"
-              >{{ item.description.substring(0, 40) }}...</span
+          <div class="hardware-item" v-for="(product, i) in products" :key="i">
+            <router-link
+              :aria-label="product.title"
+              :to="'/product/' + product.id"
             >
-            <span class="price-hardware">{{ item.price }} USD</span>
+              <div class="hardware-item__img">
+                <img :src="product.imageSrc" alt="Img hardware" /></div
+            ></router-link>
+            <span class="title-hardware">{{ product.title }}</span>
+            <span class="decr-hardware"
+              >{{
+                product.description.lenght > 40
+                  ? product.description.substring(0, 40)
+                  : product.description
+              }}...</span
+            >
+            <span class="price-hardware">{{ product.price }} USD</span>
             <div class="button-hardware">
-              <v-btn flat :to="'/product/' + item.id">Посмотреть</v-btn>
-              <v-btn flat color="secondary">В корзину</v-btn>
+              <v-btn flat :to="'/product/' + product.id">Посмотреть</v-btn>
+              <app-buy-dialog :product="product"></app-buy-dialog>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="loader-page" v-else>
+      <v-progress-circular
+        :width="5"
+        indeterminate
+      ></v-progress-circular>
     </div>
   </section>
 </template>
 
 <script>
 import { Navigation, A11y, Autoplay } from 'swiper'
-
+import buyDialogProduct from '@/components/commons/buyProduct'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/less'
 import 'swiper/less/navigation'
@@ -87,7 +102,8 @@ export default {
   }),
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    'app-buy-dialog': buyDialogProduct
   },
   computed: {
     products () {
@@ -95,7 +111,13 @@ export default {
     },
     promoProducts () {
       return this.$store.getters.promoProduct
+    },
+    loading () {
+      return this.$store.getters.loading
     }
+  },
+  created () {
+    this.$store.dispatch('fetchProducts')
   },
   setup () {
     const onSwiper = (swiper) => {

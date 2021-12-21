@@ -80,6 +80,11 @@ export default {
           })
       }
     }
+  },
+  created () {
+    if (this.$route.query.loginError) {
+      this.$store.dispatch('setError', true)
+    }
   }
 }
 </script>

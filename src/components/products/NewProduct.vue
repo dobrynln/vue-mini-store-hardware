@@ -65,20 +65,26 @@
             >
           </v-col>
           <v-col cols="12" md="4">
-            <div class="download-img">
-              <img
-                src="https://image.ibb.co/fZzq1o/Lenovo_Legion_Y520.jpg"
-                alt=""
-              />
+            <div class="download-img" v-if="imageSrc">
+              <img :src="imageSrc" alt="img" />
             </div>
           </v-col>
-          <v-btn>Добавить изображение продукта</v-btn>
+          <v-btn @click="updatedImg">Добавить изображение продукта</v-btn>
+          <input
+            type="file"
+            style="display: none"
+            ref="inputFile"
+            accept="image/*"
+            @change="onFileChange"
+          />
           <v-switch
             v-model="form.promo"
             flat
             label="Добавить в акцию?"
           ></v-switch>
-          <v-btn type="submit">Добавить продукт</v-btn>
+          <v-btn type="submit" :loading="loading" :disabled="loading"
+            >Добавить продукт</v-btn
+          >
         </div>
       </v-form>
     </div>
@@ -93,12 +99,14 @@ export default {
     form: {
       title: '',
       vendor: '',
-      price: '',
       color: '',
+      price: 0,
       material: '',
       description: '',
       promo: false
-    }
+    },
+    imageSrc: '',
+    image: null
   }),
   setup: () => ({ v$: useValidate() }),
   validations () {
@@ -109,23 +117,49 @@ export default {
       }
     }
   },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   methods: {
     postNewProduct () {
       this.v$.$validate()
       if (!this.v$.$error) {
         const product = {
+          description: this.form.description,
+          color: this.form.color,
+          material: this.form.material,
+          price: +this.form.price,
+          promo: this.form.promo,
           title: this.form.title,
           vendor: this.form.vendor,
-          color: this.form.color,
-          price: +this.form.price,
-          material: this.form.material,
-          description: this.form.description,
-          promo: this.form.promo
+          image: this.image
         }
-        console.log(product)
+
+        this.$store
+          .dispatch('CreateProduct', product)
+          .then(() => {
+            this.$router.push('/list')
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       } else {
         console.log('not ok')
       }
+    },
+    updatedImg () {
+      this.$refs.inputFile.click()
+    },
+    onFileChange (event) {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.imageSrc = reader.result
+      }
+      reader.readAsDataURL(file)
+      this.image = file
     }
   }
 }

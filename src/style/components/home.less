@@ -20,6 +20,11 @@
     height: 50%;
     width: 35%;
   }
+  &:hover {
+    transition: all 0.5s;
+    transform: scale(0.8);
+    z-index: 10;
+  }
 }
 .swiper-home {
   padding: 5px !important;
@@ -131,6 +136,7 @@
         height: auto;
       }
       button {
+        margin-left: 10px;
         background-color: @red-light;
         color: #fff;
       }
@@ -144,3 +150,10 @@
   }
 }
 ///
+.loader-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: @red-light;
+}
