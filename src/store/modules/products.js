@@ -131,8 +131,10 @@ export default {
         return product.promo === true
       })
     },
-    myCreateProducts (state) {
-      return state.products
+    myCreateProducts (state, getters) {
+      return state.products.filter(product => {
+        return product.ownerId === getters.user.id
+      })
     },
     infoProduct (state) {
       return productId => {

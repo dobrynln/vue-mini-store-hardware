@@ -32,9 +32,7 @@
         <v-btn color="red" @click="requestCancel"> Отмена </v-btn>
         <v-btn @click="requestSave">Отправить</v-btn>
       </v-card-actions>
-      <div class="v-else__buy" v-else>
-        Отправка....
-      </div>
+      <div class="v-else__buy" v-else>Отправка....</div>
     </v-card>
   </v-dialog>
 </template>
@@ -62,11 +60,12 @@ export default {
           .dispatch('createOrder', {
             name: this.name,
             phone: this.phone,
-            id: this.productId
+            productId: this.product.id,
+            ownerId: this.product.ownerId
           })
           .finally(() => {
             this.name = ''
-            this.phoner = ''
+            this.phone = ''
             this.dialog = false
             this.loadingLocal = false
           })

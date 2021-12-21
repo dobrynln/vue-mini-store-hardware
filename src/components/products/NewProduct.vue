@@ -70,6 +70,9 @@
             </div>
           </v-col>
           <v-btn @click="updatedImg">Добавить изображение продукта</v-btn>
+          <span class="span-invalid" v-if="v$.imageSrc.$error"
+            >Изображение обязательно!</span
+          >
           <input
             type="file"
             style="display: none"
@@ -114,7 +117,8 @@ export default {
       form: {
         title: { required },
         price: { required }
-      }
+      },
+      imageSrc: { required }
     }
   },
   computed: {

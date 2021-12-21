@@ -27,10 +27,8 @@
               >Описание: {{ product.description }}</span
             >
             <div class="product-button">
-              <editProduct :product="product"></editProduct>
-              <app-buy-dialog
-                :product="product"
-              ></app-buy-dialog>
+              <editProduct :product="product" v-if="buttonEdit"></editProduct>
+              <app-buy-dialog :product="product"></app-buy-dialog>
             </div>
           </div>
         </div>
@@ -43,10 +41,13 @@
 </template>
 
 <script>
+import firebase from 'firebase/compat/app'
 import editProduct from './editProduct'
 import buyDialogProduct from '@/components/commons/buyProduct'
 export default {
-  data: () => ({}),
+  data: () => ({
+    buttonEdit: false
+  }),
   props: ['id'],
   computed: {
     product () {
@@ -55,7 +56,23 @@ export default {
     },
     loading () {
       return this.$store.getters.loading
+    },
+    isOwner () {
+      return this.product.ownerId === this.$store.getters.user.id
     }
+  },
+  created () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (this.isOwner) {
+          this.buttonEdit = true
+        } else {
+          this.buttonEdit = false
+        }
+      } else {
+        return this.product
+      }
+    })
   },
   components: {
     editProduct,

@@ -59,9 +59,17 @@ export default {
           description: this.editDescr,
           id: this.product.id
         })
-        this.dialog = false
       }
+      const htmlClass = document.querySelector('html')
+      if (htmlClass.classList.contains('v-overlay-scroll-blocked')) {
+        htmlClass.classList.remove('v-overlay-scroll-blocked')
+      }
+      this.dialog = false
     }
+  },
+  created () {
+    this.editTitle = this.product.title
+    this.editDescr = this.product.description
   },
   computed: {},
   watch: {}
